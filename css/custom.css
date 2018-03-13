@@ -1,0 +1,428 @@
+body { font-family: "Open Sans"; font-size:18px; background:#322920; }
+h1 {font-size: 4em; font-family: 'Kaushan Script', cursive;}
+h2 {font-size:2.25em; font-family: 'Roboto', sans-serif; font-weight:300; padding-bottom:25px;}
+h3 {color:white;}
+div.tooltip {
+  position: absolute;
+  text-align: center;
+  width: auto;
+  height: auto;
+  padding: 2px;
+  font: 12px sans-serif;
+  background: lightsteelblue;
+  border: 0px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+p {font-size:1.25em;}
+select {border:none; background:white;}
+.circleLabel {fill:red;}
+.headerRow {
+  /*#304950 9EAA9C*/
+  background: #50A8AC;
+  color:#FFF;
+  height:250px;
+  margin-bottom:25px;
+  border-bottom:10px solid #FFF;
+  text-shadow: 3px 3px 2px rgba(0, 0, 0, .5);}
+#map { margin-left:auto; margin-right:auto; display:block;
+  stroke: white; fill: #c1c1c1;}
+.axis {font-size: 10px; }
+.axis path { fill: none; stroke: black; stroke-width: 2;}
+.axis line { stroke: black; }
+
+#calculateButton {/*margin-left:auto; margin-right:auto; display:block;*/ margin-top: 20px;}
+#clearButton {/*margin-left:auto; margin-right:auto; display:block; */margin-top: 20px;}
+
+
+
+button {
+  /*font-family: "Comic Sans MS";*/
+  font-family: "Lato", sans-serif;
+
+  position: relative;
+  background-color: #FFFFFF;
+  border: none;
+  font-size: 15px;
+  color: #000000;
+  padding: 10px 10px;
+  height: 44px;
+  width: 120px;
+  border: solid #6B6B6B 2px;
+  text-align: center;
+  vertical-align: center;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  text-decoration: none;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 8px;
+  margin-left: 25px;
+}
+button:after {
+  content: "";
+  background: #c1c1c1;
+  display: block;
+  position: absolute;
+  padding-top: 300%;
+  padding-left: 350%;
+  margin-left: -20px!important;
+  margin-top: -120%;
+  opacity: 0;
+  transition: all 0.8s
+}
+button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+.oneRow {width:50%; margin-left:auto; margin-right:auto; display:block; margin-top: 20px; }
+#weight_caffeine {width:80%; padding-bottom:50px; margin-left:auto; margin-right:auto; display:block; margin-top: 20px; }
+
+select {
+  width: 40%;
+  border: solid lightgray 2px;
+  border-radius:5px;
+  background-color: #fff;
+  color:black;
+  margin-right:25px;
+  margin-left:25px;
+}
+
+.healthBox {background:white; padding:50px; border-radius:25px; font-size:1.5em; text-align:center;
+  position: relative;}
+
+
+input {  width: 35%;
+  border: solid lightgray 2px;
+  border-radius:5px;
+  background-color: #fff;
+  color:black;}
+
+
+.barAxis {stroke: black; fill:none; stroke-width:1px;}
+.tick > text {stroke:none; fill: black;}
+.tick {stroke: none;}
+
+.bubbleChartLegend > button {width:150px; height:44px; margin:10px; color:white; font-size: .75em; text-transform: uppercase; border:none;  }
+#ALL {color:black !important;}
+.inactive {opacity:.25;}
+.active {opacity:1;}
+
+#graph > svg {margin-top:-100px; margin-left:-25px;}
+
+#caffeineText {margin-left:50px;}
+
+.drinkButton.inactive {background: #adadad !important; color:dimgray;}
+.drinkButton {background: #50A8AC; color:white; text-transform: uppercase; border:none; }
+/*****************************************************/
+/*****************************************************/
+/************ BEGIN MEDIA QUERIES*********************/
+/****************************************************/
+
+/* Large Screens */
+@media (min-width: 1280px) {
+  #worldMap {height:425px;}
+  .mapRow {min-height:500px;}
+
+}
+
+/* Large Screens */
+@media only screen
+and (min-width: 1025px)
+and (max-width: 1279px){
+ #graph > svg{ margin-top:25px !important;}
+
+}
+
+/*******************************************/
+/*******************************************/
+/**********TABLET SIZE QUERIES**************/
+/*******************************************/
+/*******************************************/
+
+/* iPad in portrait & landscape */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)  {
+  h1 {font-size: 3em; line-height: 1.5em; margin:10px 20px !important;}
+  .headerRow {height:150px !important;}
+  h2 {margin: 10px 160px; font-size:1.5em;}
+  #worldMap {margin-left:0px !important; height:400px !important; padding-left:0px !important;}
+  .dataMap {width:1024px !important; height:400px !important;}
+
+  #caffeine {padding-left:5px !important; padding-right:5px !important; padding-bottom:50px !important;}
+  #caffeine > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:0px !important;}
+  #caffeineParagraph{font-size: 1em !important;}
+
+  #coffeeButton{ margin-left: 130px !important; }
+  #teaButton{margin-left: 20px !important; }
+  #sodaButton{margin-left: 20px !important; }
+
+  #bubbleArea {padding-right:0px !important; margin-left:0px !important;}
+
+  .caffeineLimit {font-size: .85em;}
+  h3 {font-size:1em;}
+  #weight_caffeine {padding-top:0px !important; margin-top:0px !important; text-align:center;}
+  .caffeineLimitTitle {margin: 25px 20px 15px !important;}
+.caffeineInput {text-align:left !important;}
+  select {width:45%; margin-left:0px !important; margin-bottom:15px; }
+  input {width:45%; margin-left:0px !important; margin-bottom:15px;}
+
+  #calculateButton, #clearButton {width:48%; margin:0px;}
+  #calculateButton {margin-right:10px;}
+
+  .healthBox {padding: 25px; top:0px !important;}
+  #headerText {padding-right:0px; margin-top:20px; }
+  #caffeine {box-shadow:none !important;}
+
+  #coffeeCircle, #teaCircle, #sodaCircle {position:relative; top:25px;}
+  .instructions {margin-left:-55px !important; margin-bottom:25px !important;}
+  .bubbleChartLegend > button {width:150px; height:44px; margin:5px; padding:0px; color:white; font-size: .75em; text-transform: uppercase; border:none; position:relative; float:left; }
+  .bubbleChartLegend {margin-left:50px; margin-bottom:25px;}
+  #graph {padding:0px; margin-left:0px !important;}
+  #graph > svg {margin-top:-25px; margin-left:-10px;}
+}
+
+/* iPad in portrait */
+@media only screen
+and (min-device-width : 768px)
+and (max-device-width : 1024px)
+and (orientation : portrait) { }
+
+@media (min-width: 1280px) {
+  #caffieneLimitInfo {margin-top:100px;}
+  #worldMap {height:425px;}
+  .mapRow {min-height:500px;}
+  #headertext {margin-top:50px;}
+  select {width:200px !important; margin-left:0px !important; margin-bottom:15px;}
+  input {width:200px !important; margin-left:0px !important; margin-bottom:15px;}
+
+  #calculateButton, #clearButton {width:200px !important; margin:auto; position:relative; float:left;}
+  #calculateButton {margin-right:10px;}
+.calculateButtons {position:absolute; left:25%;}
+  #caffeineParagraph{font-size: 1em !important;}
+
+}
+
+/*******************************************/
+/*******************************************/
+/**********PHONE SIZE QUERIES***************/
+/*******************************************/
+/*******************************************/
+
+
+/* iPhone in portrait */
+@media only screen
+and (min-device-width : 375px)
+and (max-device-width : 667px)
+and (orientation : portrait) {
+  h1 {font-size: 2em; line-height: 1.5em; margin:10px 25px;}
+  .headerRow {height:150px !important;}
+  h2 {margin: 10px 65px; font-size:1.5em;}
+  #worldMap {margin-left:0px !important;  padding-left:0px !important;}
+  .dataMap {width:360px !important;}
+
+  #caffeine {padding-left:5px !important; padding-right:5px !important;}
+  #caffeine > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:0px !important;}
+
+  #bubbleArea {padding-right:0px !important; margin-left:0px !important;}
+
+  .caffeineLimit {font-size: .85em;}
+
+  #weight_caffeine {padding-top:0px !important; margin-top:0px !important; text-align:center;}
+  .caffeineLimitTitle {margin: 25px 20px 15px !important;}
+
+  select {width:100%; margin-left:0px !important; margin-bottom:15px;}
+  input {width:100%; margin-left:0px !important; margin-bottom:15px;}
+
+  #calculateButton, #clearButton {width:48%; margin:0px; position:relative; float:left;}
+  #calculateButton {margin-right:10px;}
+
+  .healthBox {padding: 25px; top:0px !important;}
+  #headerText {padding-right:0px; }
+  #caffeine {box-shadow:none !important;}
+
+
+  .tick > text {font-size: .55em;}
+  #xAxis {font-size:1.25em;}
+
+  .bubbleChartLegend > button {width:100px; height:44px; margin:5px; padding:0px; color:white; font-size: .75em; text-transform: uppercase; border:none; position:relative; float:left; }
+  .bubbleChartLegend {margin-left:0px !important; padding-left:0px; margin-bottom:25px;}
+  .instructions {margin-left:0px !important;}
+  #graph {padding:0px; margin-left:0px !important;}
+  #graph > svg {margin-top:-30px; margin-left:0px; font-size: 9px; }
+  #caffeineText {margin-left:5px; text-align:center;}
+  #caffeineText > p {font-size: .75em;}
+  #caffeineText > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:10px !important;}
+
+  .drinkButton {width:100px; margin:0px; }
+
+
+}
+
+/* For iPhone4*/
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 350px)
+and (orientation : portrait) {
+  h1 {font-size: 1.75em; line-height: 1.5em; margin:10px 25px;}
+  .headerRow {height:150px !important;}
+  h2 {margin: 10px 65px; font-size:1.5em;}
+  #worldMap {margin-left:0px !important;  padding-left:0px !important;}
+  .dataMap {width:360px !important;}
+
+  #caffeine {padding-left:5px !important; padding-right:5px !important;}
+  #caffeine > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:0px !important;}
+
+  #bubbleArea {padding-right:0px !important; margin-left:0px !important;}
+
+  .caffeineLimit {font-size: .85em;}
+
+  #weight_caffeine {padding-top:0px !important; margin-top:0px !important; text-align:center;}
+  .caffeineLimitTitle {margin: 25px 20px 15px !important;}
+
+  #ALL {margin-left: 30px !important}
+  #AS {margin-left: 30px !important}
+  #AF {margin-left: 30px !important}
+  #OC {margin-left: 30px !important}
+
+  select {width:100%; margin-left:0px !important; margin-bottom:15px;}
+  input {width:100%; margin-left:0px !important; margin-bottom:15px;}
+
+  #calculateButton, #clearButton {width:48%; margin:0px; position:relative; float:left;}
+  #calculateButton {margin-right:10px;}
+
+  .healthBox {padding: 25px; top:0px !important;}
+  #headerText {padding-right:0px; }
+  #caffeine {box-shadow:none !important;}
+
+
+  .tick > text {font-size: .55em;}
+  #xAxis {font-size:1.25em;}
+
+  .bubbleChartLegend > button {width:100px; height:44px; margin:5px; padding:0px; color:white; font-size: .75em; text-transform: uppercase; border:none; position:relative; float:left; }
+  .bubbleChartLegend {margin-left:0px !important; padding-left:0px; margin-bottom:25px;}
+  .instructions {margin-left:0px !important; margin-top:0px !important;}
+  #graph {padding:0px; margin-left:0px !important;}
+  #graph > svg {margin-top:-30px; margin-left:0px; font-size: 8.5px; }
+  #caffeineText {margin-left:5px; text-align:center;}
+  #caffeineText > p {font-size: .75em;}
+  #caffeineText > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:10px !important;}
+
+  .drinkButton {width:100px; margin:0px; }
+
+  #cafLabel {transform: translate(0px,95px)}
+
+}
+
+/* For Galaxy S5 */
+@media only screen
+and (min-device-width : 350px)
+and (max-device-width : 360px)
+and (orientation : portrait) {
+  h1 {font-size: 1.75em; line-height: 1.5em; margin:10px 25px;}
+  .headerRow {height:150px !important;}
+  h2 {margin: 10px 65px; font-size:1.5em;}
+  #worldMap {margin-left:0px !important;  padding-left:0px !important;}
+  .dataMap {width:360px !important;}
+
+  #caffeine {padding-left:5px !important; padding-right:5px !important;}
+  #caffeine > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:0px !important;}
+
+  #bubbleArea {padding-right:0px !important; margin-left:0px !important;}
+
+  .caffeineLimit {font-size: .85em;}
+
+  #weight_caffeine {padding-top:0px !important; margin-top:0px !important; text-align:center;}
+  .caffeineLimitTitle {margin: 25px 20px 15px !important;}
+
+  #ALL {margin-left: -5px !important}
+  #NA {margin-left: -5px !important}
+  #OC {margin-left: -5px !important}
+
+  select {width:100%; margin-left:0px !important; margin-bottom:15px;}
+  input {width:100%; margin-left:0px !important; margin-bottom:15px;}
+
+  #calculateButton, #clearButton {width:48%; margin:0px; position:relative; float:left;}
+  #calculateButton {margin-right:10px;}
+
+  .healthBox {padding: 25px; top:0px !important;}
+  #headerText {padding-right:0px; }
+  #caffeine {box-shadow:none !important;}
+
+
+  .tick > text {font-size: .55em;}
+  #xAxis {font-size:1.25em;}
+
+  .bubbleChartLegend > button {width:100px; height:44px; margin:5px; padding:0px; color:white; font-size: .75em; text-transform: uppercase; border:none; position:relative; float:left; }
+  .bubbleChartLegend {margin-left:0px !important; padding-left:0px; margin-bottom:25px;}
+  .instructions {margin-left:0px !important; margin-top:0px !important;}
+  #graph {padding:0px; margin-left:0px !important;}
+  #graph > svg {margin-top:-30px; margin-left:0px; font-size: 8.5px; }
+  #caffeineText {margin-left:5px; text-align:center;}
+  #caffeineText > p {font-size: .75em;}
+  #caffeineText > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:10px !important;}
+
+  .drinkButton {width:100px; margin:0px; }
+
+  #cafLabel {transform: translate(0px,95px)}
+
+}
+
+/* iPhone in portrait */
+@media only screen
+and (min-device-width : 361px)
+and (max-device-width : 375px)
+and (orientation : portrait) {
+  h1 {font-size: 1.75em; line-height: 1.5em; margin:10px 25px;}
+  .headerRow {height:150px !important;}
+  h2 {margin: 10px 65px; font-size:1.5em;}
+  #worldMap {margin-left:0px !important;  padding-left:0px !important;}
+  .dataMap {width:360px !important;}
+
+  #caffeine {padding-left:5px !important; padding-right:5px !important;}
+  #caffeine > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:0px !important;}
+
+  #bubbleArea {padding-right:0px !important; margin-left:0px !important;}
+
+  .caffeineLimit {font-size: .85em;}
+
+  #weight_caffeine {padding-top:0px !important; margin-top:0px !important; text-align:center;}
+  .caffeineLimitTitle {margin: 25px 20px 15px !important;}
+
+/*  #ALL {margin-left: 30px !important}
+  #AS {margin-left: 30px !important}
+  #AF {margin-left: 30px !important}
+  #OC {margin-left: 30px !important}*/
+
+  select {width:100%; margin-left:0px !important; margin-bottom:15px;}
+  input {width:100%; margin-left:0px !important; margin-bottom:15px;}
+
+  #calculateButton, #clearButton {width:48%; margin:0px; position:relative; float:left;}
+  #calculateButton {margin-right:10px;}
+
+  .healthBox {padding: 25px; top:0px !important;}
+  #headerText {padding-right:0px; }
+  #caffeine {box-shadow:none !important;}
+
+
+  .tick > text {font-size: .55em;}
+  #xAxis {font-size:1.25em;}
+
+  .bubbleChartLegend > button {width:100px; height:44px; margin:5px; padding:0px; color:white; font-size: .75em; text-transform: uppercase; border:none; position:relative; float:left; }
+  .bubbleChartLegend {margin-left:0px !important; padding-left:0px; margin-bottom:25px;}
+  .instructions {margin-left:0px !important; margin-top:0px !important;}
+  #graph {padding:0px; margin-left:0px !important;}
+  #graph > svg {margin-top:-30px; margin-left:0px; font-size: 8.5px; }
+  #caffeineText {margin-left:5px; text-align:center;}
+  #caffeineText > p {font-size: .75em;}
+  #caffeineText > h2 {margin-left: 0px !important; margin-right: 0px !important; margin-bottom: 0px !important; padding-bottom:10px !important;}
+
+  .drinkButton {width:100px; margin:0px; }
+
+  #cafLabel {transform: translate(0px,95px)}
+
+}

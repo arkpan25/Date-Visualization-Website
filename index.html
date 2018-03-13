@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='css/bootstrap.css' rel='stylesheet' type='text/css'>
+<link href='css/custom.css' rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Pacifico|Kaushan+Script|Quattrocento+Sans:400,400italic,700italic,700' rel='stylesheet' type='text/css'><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="data/liquid.js" language="JavaScript"></script>
+<script src="data/countrydata.js" language="JavaScript"></script>
+<script src="js/bootstrap.js" language="JavaScript"></script>
+<script src="data/verge.js" language="JavaScript"></script>
+<script src="data/snap.svg-min.js"></script>
+	<script src="data/map.js"></script>
+
+</head>
+
+<body>
+
+
+
+	<!-- BEGIN HEADER ROW -->
+	<div class="row headerRow">
+		<div class="col-lg-12 col-12 col-sm-12 col-xs-12" id="headertext" style="text-align:center;">
+			<h1>Caffeine consumption of the world</h1>
+		</div>
+
+	</div>
+	<!-- END HEADER ROW -->
+
+	<!-- BEGIN MAP AND LIQUID CONTENT -->
+
+	<div class="container-fluid" >
+
+		<div class="row mapRow" style="background:#304950;">
+			<div class="row" style="text-align:center;">
+				<h2 style="color:white;">Top Caffeine Consuming Countries</h2>
+			</div>
+
+			<!--from github world map--><div class="bubbleChartLegend col-lg-2 col-sm-12 col-xs-12 pull-left" style="padding-left:25px;">
+
+			<p class="instructions" style="font-size:.65em; border:1px dotted white; margin:15px; padding:15px; line-height: 1.25em; text-align:center; font-style:italic; width:100%; color:white; opacity:.75; position:relative;">
+				Choose a continent to see countries and then click on that country to see their caffeine consumption
+			</p>
+
+			<button id="ALL" class="legendButton" style="background-color:white;" onclick="UpdateBubble(this.id)">World</button>
+			<button id="EU" class="legendButton inactive" style="background-color: #CA7384;" onclick="UpdateBubble(this.id)">Europe</button>
+			<button id="AS" class="legendButton inactive" style="background-color: #C6A936;" onclick="UpdateBubble(this.id)">Asian</button>
+			<button id="NA" class="legendButton inactive" style="background-color: #B75F30;" onclick="UpdateBubble(this.id)">North America</button> <span class="hidden-xs hidden-sm"><br></span>
+			<button id="AF" class="legendButton inactive" style="background-color: #B6353A;" onclick="UpdateBubble(this.id)">Africa</button>
+			<button id="SA" class="legendButton inactive" style="background-color: #34937F;" onclick="UpdateBubble(this.id)">South America</button>
+			<button id="OC" class="legendButton inactive" style="background-color: #2877BA;" onclick="UpdateBubble(this.id)">Oceania</button>
+		</div>
+					<div class="col-lg-4 col-xs-12 col-sm-12 pull-left" id="graph" style="text-align:center; margin-left:30px;">
+
+
+					</div>
+
+			<div id="caffeine"  style="padding:25px; margin-top:0px; margin-bottom:15px; margin-right:0px; text-align:center; background:white; -webkit-box-shadow: 5px 5px 0px 1px rgba(80,168,172,1);
+ -moz-box-shadow: 5px 5px 0px 1px rgba(80,168,172,1); box-shadow: 5px 5px 0px 1px rgba(80,168,172,1);" class="col-lg-4 col-lg-offset-1 col-md-5 col-6 col-xs-12">
+
+				<h2 style="color:#50A8AC;">What people in <span id="countryName">Country</span> are drinking to get caffeine</h2>
+				<div class="hidden-lg hidden-md">
+					<p style="font-size:.55em; font-style:italic;">(Choose country above to see consumption of drinks below)</p>
+				</div>
+				<div class="col-lg-4 col-sm-4 col-xs-4" >COFFEE</div>
+				<div class="col-lg-4 col-sm-4 col-xs-4">TEA</div>
+				<div class="col-lg-4 col-sm-4 col-xs-4">SODA</div>
+				<div id="coffeeCircle">
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!-- END MAP AND LIQUID CONTENT -->
+
+	<!-- BEGIN BUBBLE CHART AND CAFFEINE BREAKDOWN -->
+	<div class="row" style="background:white;">
+		<!-- CAFFEINE CONTENT IN COMMON DRINKS -->
+		<div class="col-lg-4 col-md-5 col-sm-12 col-xs-12" id="caffeineText">
+			<h2>Amount of caffeine in drinks</h2>
+			<p id="caffeineParagraph">The amount of caffeine in a drink can vary greatly on the brand and type of drink.</p><br>
+			<button id="coffeeButton" class="drinkButton">Coffee</button>
+			<button id="teaButton" class="drinkButton inactive">Tea</button>
+			<button id="sodaButton" class="drinkButton inactive" >Soda</button>
+		</div>
+		<div id="caffeine_content" style="padding:0px; margin:0px; padding-top:25px; " class="col-lg-5 col-md-6 col-xs-12">
+			<script type="text/javascript" src="data/caffeinedrink.js"></script>
+		</div>
+
+	</div>
+
+	<!-- BEGIN DEATH BY CAFFEINE -->
+	<div class="row" style="background:#50A8AC; padding-bottom:50px;">
+
+		<div id="weight_caffeine" style="padding-top:25px;">
+			<!--dropdown menu for type-->
+			<div class="row" style="text-align:center;">
+				<div class="col-lg-6 col-sm-12 col-xs-12" id="caffieneLimitInfo">
+				<h2 class="caffeineLimitTitle" style="color:white; margin-bottom:10px; padding-bottom:0px;">How much caffeine is okay to have?</h2>
+				<p class="caffeineLimit" style="color:white;">Depending on your age and weight you can consume a certain amount of caffeine per day. The recommended amount for a healthy adult is no more than 400mg a day.
+				Want to find out if you are below this suggested limit? Fill out the information below to find out.</p>
+				</div>
+			<div class="col-lg-6 col-sm-12 col-xs-12 caffeineInput" style="text-align:center;">
+					<h3>Are you...</h3>
+					<select id="typeSelect">
+						<option value="45">A Child (Ages 12 and Under)</option>
+						<option value="100">A Teenager (Ages 13 to 18)</option>
+						<option value="400" selected>A Healthy Adult</option>
+						<option value="200">An Adult with Heart Conditions</option>
+						<option value="200">An Adult with Type 2 Diabetes</option>
+						<option value="200">A Pregnant or Nursing Women</option>
+					</select>
+					<!--text input for weight-->
+					<input id="weight" type="text" placeholder="Your weight (KG)" class="text">
+
+					<h3>What are you drinking and how many?</h3>
+					<!--dropdown menu for drink-->
+					<select id="drink1">
+					</select>
+					<!--text input for number of drinks-->
+					<input id= "number1" type="text" placeholder="Number of drinks" class="text">
+					<h3>What are you drinking and how many?</h3>
+					<!--dropdown menu for drink-->
+					<select id="drink2">
+					</select>
+					<!--text input for number of drinks-->
+					<input id="number2" type="text" placeholder="Number of drinks" class="text">
+					<h3>What are you drinking and how many?</h3>
+					<!--dropdown menu for drink-->
+					<select id="drink3">
+					</select>
+					<!--text input for number of drinks-->
+					<input id="number3" type="text" placeholder="Number of drinks" class="text"><br><br>
+				<div class="calculateButtons"><button id="calculateButton"  style="background:#ed1c24; color:white;" data-toggle="modal" data-target="#myModal" onclick = "calculate()">Calculate</button>
+				<button id="clearButton" onclick = "clearAll()">Clear</button></div>
+			</div>
+
+
+			<!-- Modal -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">Your Caffeine Intake</h4>
+						</div>
+						<div class="modal-body healthBox">
+							<p style="font-size:.9em;">According to your condition, the appropriate caffeine consumption per day is <span id = "healthy" style = "color: red; font-weight:bold; font-size:20px"></span>  mg and your caffeine consumption per day is <span id = "consumption" style = "color: red; font-weight:bold; font-size:20px"></span>  mg . <span id = "result"></span></p>
+							<p style="font-size:.75em;">*data from the <a href="http://www.caffeineinformer.com/caffeine-safe-limits">Caffeine Safe Limits : Determine Your Safe Daily Dose.</a></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+	</div>
+	</div>
+
+</div>
+
+
+
+<script>
+
+	//Toggle active and inactive class for the legend buttons
+	$( ".legendButton" ).click(function() {
+		$(".legendButton").addClass("inactive");
+		$( this ).toggleClass( "inactive" );
+	});
+
+	//Toggle active and inactive class for the drink buttons
+
+	$( ".drinkButton" ).click(function() {
+		$(".drinkButton").addClass("inactive");
+		$( this ).toggleClass( "inactive" );
+	});
+
+
+	//detect window's width and height, either way is correct
+	var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
+	var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+	verge.viewportW() === verge.viewport().width
+    verge.viewportH() === verge.viewport().height
+
+
+
+
+	var coffeeTotal = 0;
+	var teaTotal = 0;
+	var sodaTotal = 0;
+	var width = 0;
+	var height = 0;
+	var padding = 0;
+
+	//Setting the size of the chart depending on screen size. This will only do it when loaded first, otherwise
+	//use bootstrap to modify some of the sizes later
+	if (w > 1024) {
+		width = w /2;
+		height = h / 3;
+		padding= 100;
+	}
+	if (w < 1024){
+		width = w;
+		height = h/2;
+		padding=70;
+	}
+
+	//Begin area of creating 'liquid filled' circles to show annual consumption of each item
+	d3.select("#coffeeCircle")
+			.append("svg")
+			.attr("id", "coffeeCircleInner")
+			.attr("class", "col-lg-4 col-md-4 col-xs-4 col-sm-4")
+			.attr("width", "30%")
+			.style("background", "none")
+			.style("padding", 0)
+
+
+	//Creating a coffee gradient to fill in the coffee liquid
+	var gradientCoffee = d3.select("#coffeeCircleInner")
+			.append("defs")
+			.attr("id", "coffeeDef")
+			.append("linearGradient")
+			.attr("id", "coffeeGradient")
+			.attr("x1", 0)
+			.attr("x2", 0)
+			.attr("y1", 0)
+			.attr("y2", 1);
+
+
+	//Creating of gradient fill for the coffee circle
+	gradientCoffee.append("stop")
+			.attr("offset", "0%")
+			.attr("stop-color", "#190B00")
+			.attr("stop-opacity", 1);
+
+	gradientCoffee.append("stop")
+			.attr("offset", "25%")
+			.attr("stop-color", "#261100")
+			.attr("stop-opacity", 1);
+
+	gradientCoffee.append("stop")
+			.attr("offset", "50%")
+			.attr("stop-color", "#3E1C00")
+			.attr("stop-opacity", 1);
+
+	gradientCoffee.append("stop")
+			.attr("offset", "90%")
+			.attr("stop-color", "#1D0D00")
+			.attr("stop-opacity", 1);
+
+	gradientCoffee.append("stop")
+			.attr("offset", "100%")
+			.attr("stop-color", "#1A0C01")
+			.attr("stop-opacity", 1);
+
+	d3.select("#caffeine")
+			.append("svg")
+			.attr("id", "teaCircle")
+			.attr("class", "col-lg-4 col-md-4 col-xs-4 col-sm-4")
+			.attr("width", "30%")
+			.style("background", "none")
+			.style("padding", 0);
+
+	//Creating Tea Gradient for the Tea Liquid
+	var gradientTea = d3.select("#teaCircle")
+			.append("defs")
+			.attr("id", "teaDef")
+			.append("linearGradient")
+			.attr("id", "teaGradient")
+			.attr("x1", 0)
+			.attr("x2", 0)
+			.attr("y1", 0)
+			.attr("y2", 1);
+
+	gradientTea.append("stop")
+			.attr("offset", "0%")
+			.attr("stop-color", "#E9D94E")
+			.attr("stop-opacity", 1);
+
+	gradientTea.append("stop")
+			.attr("offset", "25%")
+			.attr("stop-color", "#E2B534")
+			.attr("stop-opacity", 1);
+
+	gradientTea.append("stop")
+			.attr("offset", "50%")
+			.attr("stop-color", "#E38931")
+			.attr("stop-opacity", 1);
+
+	gradientTea.append("stop")
+			.attr("offset", "90%")
+			.attr("stop-color", "#E56F32")
+			.attr("stop-opacity", 1);
+
+	gradientTea.append("stop")
+			.attr("offset", "100%")
+			.attr("stop-color", "#E86434")
+			.attr("stop-opacity", 1);
+
+
+	d3.select("#caffeine")
+			.append("svg")
+			.attr("id", "sodaCircle")
+			.attr("class", "col-lg-4 col-md-4 col-xs-4 col-sm-4")
+			.attr("width", "30%")
+			.style("background", "none")
+			.style("padding", 0);
+
+
+	//Creating Tea Gradient for the Tea Liquid
+	var gradientSoda = d3.select("#sodaCircle")
+			.append("defs")
+			.attr("id", "sodaDef")
+			.append("linearGradient")
+			.attr("id", "sodaGradient")
+			.attr("x1", 0)
+			.attr("x2", 0)
+			.attr("y1", 0)
+			.attr("y2", 1);
+
+	gradientSoda.append("stop")
+			.attr("offset", "0%")
+			.attr("stop-color", "#3D0E00")
+			.attr("stop-opacity", 1);
+
+	gradientSoda.append("stop")
+			.attr("offset", "50%")
+			.attr("stop-color", "#752201")
+			.attr("stop-opacity", 1);
+
+	gradientSoda.append("stop")
+			.attr("offset", "75%")
+			.attr("stop-color", "#8c3310")
+			.attr("stop-opacity", 1);
+
+
+	//Turned the liquid js call from original into a function call so i can pass along variables
+	var caffeine = function(country) {
+		if(country != null){
+			for (i = 0; i < countrycaffeine.length; i++) {
+				if (countrycaffeine[i].Country == country) {
+					var totalLiquid = countrycaffeine[i].annualCoffee +  countrycaffeine[i].annualTea + countrycaffeine[i].annualSoda;
+					var coffeeTotal = Math.round(countrycaffeine[i].annualCoffee / totalLiquid * 100);
+					var teaTotal = Math.round(countrycaffeine[i].annualTea / totalLiquid * 100);
+					var sodaTotal = Math.round(countrycaffeine[i].annualSoda / totalLiquid * 100);
+					document.getElementById("countryName").innerHTML = country;
+				}
+			}
+		}
+		else{
+			var coffeeTotal = 0;
+			var teaTotal = 0;
+			var sodaTotal = 0;
+			document.getElementById("countryName").innerHTML = "in a country " ;
+		};
+
+		//Remove the previous percentage before putting new one in
+		d3.select("#coffeeCircleInner g").remove();
+		var coffeeConfig = liquidFillGaugeDefaultSettings();
+		coffeeConfig.circleColor = "#1A0C01";
+		coffeeConfig.textColor = "#553300";
+		coffeeConfig.waveTextColor = "#FFFFFF";
+		coffeeConfig.waveColor = "url(#coffeeGradient)";
+		coffeeConfig.circleThickness = 0.1;
+		coffeeConfig.circleFillGap = 0.2;
+		coffeeConfig.textVertPosition = 0.8;
+		coffeeConfig.waveAnimateTime = 1500;
+		coffeeConfig.waveHeight = 0.075;
+		coffeeConfig.waveCount = 1;
+
+		var coffeeCaffeine = loadLiquidFillGauge("coffeeCircleInner", coffeeTotal, coffeeConfig);
+
+		//Remove the previous percentage before putting new one in
+		d3.select("#teaCircle g").remove();
+		var teaConfig = liquidFillGaugeDefaultSettings();
+		coffeeConfig.circleColor = "#E2B534";
+		coffeeConfig.textColor = "#553300";
+		coffeeConfig.waveTextColor = "#FFFFFF";
+		coffeeConfig.waveColor = "url(#teaGradient)";
+		coffeeConfig.circleThickness = 0.1;
+		coffeeConfig.circleFillGap = 0.2;
+		coffeeConfig.textVertPosition = 0.8;
+		coffeeConfig.waveAnimateTime = 1500;
+		coffeeConfig.waveHeight = 0.075;
+		coffeeConfig.waveCount = 1;
+
+		var teaCaffeine = loadLiquidFillGauge("teaCircle", teaTotal, coffeeConfig);
+
+		//Remove the previous percentage before putting new one in
+		d3.select("#sodaCircle g").remove();
+		var sodaConfig = liquidFillGaugeDefaultSettings();
+		coffeeConfig.circleColor = "#A07D53";
+		coffeeConfig.textColor = "#553300";
+		coffeeConfig.waveTextColor = "#FFFFFF";
+		coffeeConfig.waveColor = "url(#sodaGradient)";
+		coffeeConfig.circleThickness = 0.1;
+		coffeeConfig.circleFillGap = 0.2;
+		coffeeConfig.textVertPosition = 0.8;
+		coffeeConfig.waveAnimateTime = 1500;
+		coffeeConfig.waveHeight = 0.075;
+		coffeeConfig.waveCount = 1;
+
+		var sodaCaffeine = loadLiquidFillGauge("sodaCircle", sodaTotal, coffeeConfig);
+
+	};
+
+	//Call caffeine function with null country so that it is blank in the beginning
+	caffeine(null);
+
+
+
+
+//<!-------------------------------------------------------------------------------------->
+	//bar chart of caffine content of specific kind of drinks STARTS FROM HERE
+	if (w > 1024) {
+		width = w /2.5;
+		height = h / 2;
+		padding= 100;
+	}
+	if (w < 1024){
+		width = w;
+		height = 500;
+		padding=25;
+	}
+    var svgBar = d3.select("#caffeine_content").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+		.attr("id", "barChartGraph")
+        .append("g");
+
+    // prepare data for bar chart to show caffeine content in specific kind of drinks
+    var coffeeData = [];
+    var coffeeKey = [];
+    var teaData = [];
+    var teaKey = [];
+    var sodaData = [];
+    var sodaKey = [];
+
+
+
+    for (var i = 0; i < caffeinedrink.length; i++) {
+		var obj = caffeinedrink[i];
+		if (obj["Type"] == "Coffee") {
+			coffeeKey.push(obj.Drink);
+			var a = obj.Drink;
+			coffeeData.push(13.5 * (obj["caffeinemg/floz"]));
+		} else if (obj["Type"] == "Soda") {
+			sodaKey.push(obj.Drink);
+			var a = obj.Drink;
+			sodaData.push(13.5 * (obj["caffeinemg/floz"]));
+		} else {
+			teaKey.push(obj.Drink);
+			var a = obj.Drink;
+			teaData.push(13.5 * (obj["caffeinemg/floz"]));
+		}
+	}
+
+    //sort each category of drink descending
+	var sortContent = function(array1, array2) {
+		var tempArray2 = [];
+		var tempArray1 = array1;
+		array1.sort(function(a, b) {return b-a});
+		for (var i = 0; i < 20; i++) {
+			var tempIndex = tempArray1.indexOf(array1[i]);
+			tempArray2.push(array2[tempIndex]);
+		}
+        array2 = tempArray2;
+	}
+
+    sortContent(coffeeData, coffeeKey);
+    sortContent(sodaData, sodaKey);
+    sortContent(teaData, teaKey);
+
+
+
+	//Show bar chart on click of drink
+	d3.select("#coffeeButton")
+		.on("click", function(){
+			createBar(coffeeKey, coffeeData, coffeeData[0]);
+			document.getElementById("caffeine_content").style.visibility = "visible";
+	    });
+
+	d3.select("#teaButton")
+		.on("click", function(){
+			createBar(teaKey, teaData, teaData[0]);
+			document.getElementById("caffeine_content").style.visibility = "visible";
+	    });
+
+	d3.select("#sodaButton")
+		.on("click", function(){
+			createBar(sodaKey, sodaData, sodaData[0]);
+			document.getElementById("caffeine_content").style.visibility = "visible";
+	    });
+
+	//create bar chart according to which bubble is clicked
+	var createBar = function(barKey, barData, barMax) {
+
+		// create bar chart
+		var yBands = d3.scale.ordinal()
+		.domain(barKey)
+		.rangeRoundBands([10, height], 0.6);
+
+		var yPoints = d3.scale.ordinal()
+		.domain(barKey)
+		.rangePoints([10, height], 0.9);
+
+		if (document.getElementById("xAxis") != null) {
+			document.getElementById("xAxis").remove();
+		}
+
+		var xScaleBar = d3.scale.linear()
+		.domain([0, barMax])
+		.range([padding, width]);
+		var xAxis = d3.svg.axis().scale(xScaleBar).orient("top");
+		svgBar.append("g").attr("transform", "translate(0," + 20 + ")").attr("class", "axis")
+	    .call(xAxis).attr("id", "xAxis");
+
+	    svgBar.append("text")
+	    .attr("x",width - 200)
+	    .attr("y",400)
+		.attr("id","cafLabel")
+	    .text("caffeine mg per 400ML");
+
+		barKey.forEach(function (p, i) {
+
+	        if (document.getElementById("bar" + i) != null) {
+				document.getElementById("bar" + i).remove();
+			}
+			if (document.getElementById("text" + i) != null) {
+				document.getElementById("text" + i).remove();
+			}
+
+			svgBar.append("text").attr("x", xScaleBar(0))
+			.attr("y", yBands(p))
+			.text(p)
+			.attr("id", "text" + i)
+			.attr("font-size", 10);
+
+		var tempData = [{"x": 0, "y": p}, {"x": barData[barKey.indexOf(p)], "y": p }];
+
+		var bar = d3.svg.line()
+	        .x(function(d) {return xScaleBar(d.x);})
+	        .y(function(d) {return yBands(d.y) + 7;});
+
+	    var path = svgBar.append("path").attr("d", bar(tempData)).attr("id","bar" + i)
+	        .style("stroke", "#50A8AC").style("fill","none").style("stroke-width",yBands.rangeBand())
+	        .on("click", function(d) {
+	        var tooltip = d3.select("body").append("div")
+	        .attr("class", "tooltip")
+	        .style("opacity", 0)
+	        .attr("id", "tooltip");
+	        tooltip.transition().duration(200).style("opacity", .9);
+	        tooltip.html("" + p + " :  "+ d3.round(barData[barKey.indexOf(p)]) + "  mg / 400mL")
+	        .style("left", (d3.event.pageX) + "px")
+	        .style("top", (d3.event.pageY) - 10 + "px")
+	        .style("background-color", "#e7e7e7")
+	        .style("opacity", 0.8);
+	         })
+				.style("cursor","pointer")
+	        .on("mouseout", function(d) {
+	        	if (document.getElementById("tooltip") != null) {
+	        		document.getElementById("tooltip").remove();
+	        	}
+	        });
+
+	    //add animation to bar
+	    var totalLength = path.node().getTotalLength();
+
+	    path.attr("stroke-dasharray", totalLength + " " + totalLength)
+	    .attr("stroke-dashoffset", totalLength)
+	    .transition()
+	    .duration(1500)
+	    .ease("linear")
+	    .attr("stroke-dashoffset", 0);
+
+		});
+	};
+
+	createBar(coffeeKey, coffeeData, coffeeData[0]);
+    //add dropdown menu for drink1 to drink3
+    var dropDown1 = d3.select("#drink1").attr("id", "dropdown1");
+
+    dropDown1.append("option").attr("value", 0).text("Select Drink");
+    var options1 = dropDown1.selectAll("option").data(caffeinedrink)
+    				.enter().append("option")
+    				.attr("value", function(d) {return d["Caffeine_mg"]; })
+    				.text(function(d) {return d["Drink"]; });
+	document.getElementById("dropdown1").options[0].selected = true;
+
+    var dropDown2 = d3.select("#drink2").attr("id", "dropdown2");
+
+    dropDown2.append("option").attr("value", 0).text("Select Drink");
+    var options2 = dropDown2.selectAll("option").data(caffeinedrink)
+    				.enter().append("option")
+    				.attr("value", function(d) {return d["Caffeine_mg"]; })
+    				.text(function(d) {return d["Drink"]; });
+	document.getElementById("dropdown2").options[0].selected = true;
+
+    var dropDown3 = d3.select("#drink3").attr("id", "dropdown3");
+
+    dropDown3.append("option").attr("value", 0).text("Select Drink");
+    var options3 = dropDown3.selectAll("option").data(caffeinedrink)
+    				.enter().append("option")
+    				.attr("value", function(d) {return d["Caffeine_mg"]; })
+    				.text(function(d) {return d["Drink"]; });
+	document.getElementById("dropdown3").options[0].selected = true;
+
+    //calculation function
+    var calculate = function() {
+	    var weight = Number(document.getElementById('weight').value);
+	    var number1 = document.getElementById('number1').value ? Number(document.getElementById('number1').value) : 0;
+	    var number2 = document.getElementById('number2').value ? Number(document.getElementById('number2').value) : 0;
+	    var number3 = document.getElementById('number3').value ? Number(document.getElementById('number3').value) : 0;
+	    var drink1 = document.getElementById('dropdown1').value;
+	    var drink2 = document.getElementById('dropdown2').value;
+	    var drink3 = document.getElementById('dropdown3').value;
+	    dropDown1.on("change", function() { drink1 = Number(d3.event.target.value); });
+	    dropDown2.on("change", function() { drink2 = Number(d3.event.target.value); });
+	    dropDown3.on("change", function() { drink3 = Number(d3.event.target.value); });
+
+	    var health = Number(document.getElementById('typeSelect').value);
+
+	    if (health == 400) {
+	    	health = weight * 6;
+	    }
+
+	    var consume = drink1 * number1 + drink2 * number2 + drink3 * number3;
+
+	    document.getElementById("healthy").innerHTML = health;
+	    document.getElementById("consumption").innerHTML = consume;
+
+
+	    if (Number(consume) >= Number(health)) {
+	    	document.getElementById("result").innerHTML = "You should decrease caffeine consumption!";
+	    } else {
+	    	document.getElementById("result").innerHTML = "Your caffeine consumption is suitable!"
+	    }
+	}
+
+	//clear function
+	var clearAll = function() {
+		document.getElementById("dropdown1").options[0].selected = true;
+		document.getElementById("dropdown2").options[0].selected = true;
+		document.getElementById("dropdown3").options[0].selected = true;
+		document.getElementById("typeSelect").options[2].selected = true;
+		document.getElementById("number1").value = "";
+		document.getElementById('number2').value = "";
+		document.getElementById('number3').value = "";
+		document.getElementById('weight').value = "";
+		document.getElementById("result").innerHTML = "";
+		document.getElementById("healthy").innerHTML = "";
+	    document.getElementById("consumption").innerHTML = "";	
+	}
+
+	//legend svg
+	var legend = d3.select('#legend').append('svg')
+			.attr('width', 150)
+			.attr('height', 250);
+
+	//legend for bubble chart
+	for (var i = 0; i < 6; i++) {
+		var color = ["#F17E91", "#D96429", "#EBC130", "#D73035", "#35A68B", "#2682D5"];
+		var continent = ["Europe", "North America", "Asian", "Africa", "South America", "Oceania"];
+		legend.append("rect").attr("x", 0).attr("y", 30 + 22 * i)
+				.attr("width", 30).attr("height", 20).attr("fill", color[i]);
+		legend.append("text").attr("x", 40).attr("y", 40 + 22 * i)
+				.text(continent[i])
+				.attr("alignment-baseline", "middle");
+	}
+
+	//prepare data for bubble chart
+	var bubbleData = {};
+	countrycaffeine.forEach(function(d) {
+		var name = d.Country;
+		var value = d.totalcaffeine;
+		bubbleData[name] = value;
+	});
+
+	var country_code = {};
+	var country_contient = {};
+
+	mapping.forEach(function(d) {
+		var country = d.countryName;
+		var code = d.countryCode;
+		var continent = d.continent;
+
+		country_code[country] = code;
+		country_contient[country] = continent;
+	})
+
+	//color scale
+	var continent = ["EU", "NA", "AS", "AF", "SA", "OC"];
+	var continentColor = d3.scale.ordinal()
+			.domain(continent)
+			.range(["#F17E91", "#D96429", "#EBC130", "#D73035", "#35A68B", "#2682D5"]);
+	//.range(["#1395BA", "#A2B86C", "#EBC844", "#F16C20", "#C02E1D", "#0D3C55"]);
+
+	// generate data with calculated layout values
+	var bubbleTooltip = d3.select("body")
+			.append("div")
+			.style("position", "absolute")
+			.style("z-index", "10")
+			.style("visibility", "hidden")
+			.style("color", "white")
+			.style("padding", "8px")
+			.style("background-color", "rgba(0, 0, 0, 0.75)")
+			.style("border-radius", "6px")
+			.style("font", "12px sans-serif")
+			.text("bubbleTooltip");
+
+	// D3 Bubble Chart
+	var diameter = width;
+
+	var svg = d3.select('#graph').append('svg')
+			.attr('width', diameter)
+			.attr('height', diameter);
+
+	var bubble = d3.layout.pack()
+			.size([diameter, diameter])
+			.value(function(d) {return d.size;})
+			//comment this line can reverse the arrangement of circles from inner larger to smaller
+			//.sort(function(a, b) { return -(a.value - b.value)})
+			//comment this line can cancel the hybrid arrangement of circles from inner
+			.sort( function(a, b) {
+				var threshold = 10000;
+				if ((a.value > threshold) && (b.value > threshold)) {
+					return -(a.value - b.value);
+				} else {
+					return -1;
+				}
+			})
+			.padding(5);
+
+	var nodes = bubble.nodes(processData(bubbleData))
+			.filter(function(d) { return !d.children; }); // filter out the outer bubble
+
+	//display bubbles
+	var vis = svg.selectAll('circle').data(nodes);
+
+	var duration = 500;
+	var delay = 0;
+	var delay = 0;
+
+	vis.enter().append('circle')
+			.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+			.attr('r', function(d) { return 0; })
+			.transition()
+			.duration(duration * 1.2)
+			.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+			.attr('r', function(d) { return d.r; })
+			.attr('class', function(d) { return d.className; })
+			.attr("opacity", 0.8)
+			.attr("fill", function(d) {
+				return continentColor(country_contient[d.className]);
+			})
+			.style("cursor","pointer");
+
+	d3.selectAll("circle")
+			.on("click", function(d) {
+				bubbleTooltip.text(d.className + " : " + d3.round(d.size) + " mg ");
+				bubbleTooltip.style("visibility", "visible");
+				caffeine(d.className);
+
+			})
+			.on("mousemove", function() {
+				return bubbleTooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+			})
+			.on("mouseout", function(){return bubbleTooltip.style("visibility", "hidden");});
+
+	//display text for bubbles
+	var code = svg.selectAll("text").data(nodes)
+			.style("cursor", "pointer")
+			.on("click", function(d) {
+				bubbleTooltip.text(d.className + " : " + d3.round(d.size) + " mg ");
+				bubbleTooltip.style("visibility", "visible");
+				caffeine(d.className);
+
+			});
+
+	code.enter().append("text").attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+			.text(function(d) {return country_code[d.className]})
+			.attr("text-anchor", "middle")
+			.attr("alignment-baseline", "middle")
+			.style("cursor", "pointer")
+			.on("click", function(d) {
+				bubbleTooltip.text(d.className + " : " + d3.round(d.size) + " mg ");
+				bubbleTooltip.style("visibility", "visible");
+				caffeine(d.className);
+
+			});
+
+	function processData(data) {
+		var obj = data;
+		var newDataSet = [];
+		for(var prop in obj) {
+			if (obj[prop] < 220) {continue;} else {
+				newDataSet.push({name: prop, className: prop, size: obj[prop]});
+			}
+		}
+		return {children: newDataSet};
+	}
+
+	function processDataUpdate(data, countryCode, number) {
+		var obj = data;
+		var newDataSet = [];
+		for(var prop in obj) {
+			if (obj[prop] < number) {continue;}
+			if (country_contient[prop] != countryCode) {continue;} else {
+				newDataSet.push({name: prop, className: prop, size: obj[prop]});
+			}
+		}
+		return {children: newDataSet};
+	}
+
+	function UpdateBubble(d) {
+
+		if (d == "EU") {
+			var nodes = bubble.nodes(processDataUpdate(bubbleData, "EU", 110))
+					.filter(function(d) { return !d.children; }); // filter out the outer bubble
+		}
+
+		if (d == "AS") {
+			var nodes = bubble.nodes(processDataUpdate(bubbleData, "AS", 70))
+					.filter(function(d) { return !d.children; }); // filter out the outer bubble
+		}
+
+		if (d == "NA") {
+			var nodes = bubble.nodes(processDataUpdate(bubbleData, "NA", 30))
+					.filter(function(d) { return !d.children; }); // filter out the outer bubble
+		}
+
+		if (d == "AF") {
+			var nodes = bubble.nodes(processDataUpdate(bubbleData, "AF", 30))
+					.filter(function(d) { return !d.children; }); // filter out the outer bubble
+		}
+
+		if (d == "SA") {
+			var nodes = bubble.nodes(processDataUpdate(bubbleData, "SA", 0))
+					.filter(function(d) { return !d.children; }); // filter out the outer bubble
+		}
+
+		if (d == "OC") {
+			var nodes = bubble.nodes(processDataUpdate(bubbleData, "OC", 0))
+					.filter(function(d) { return !d.children; }); // filter out the outer bubble
+		}
+
+		if (d == "ALL") {
+			var nodes = bubble.nodes(processData(bubbleData))
+					.filter(function(d) { return !d.children; }); // filter out the outer bubble
+		}
+
+		var duration = 500;
+		var delay = 0;
+
+		//display bubbles
+		vis = svg.selectAll('circle').data(nodes)
+				.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+				.attr('r', function(d) { return d.r; })
+				.attr('class', function(d) { return d.className; })
+				.attr("opacity", 0.8)
+				.attr("fill", function(d) {
+					return continentColor(country_contient[d.className]);
+				})
+				.on("click", function(d) {
+					bubbleTooltip.text(d.className + " : " + d3.round(d.size) + " mg ");
+					bubbleTooltip.style("visibility", "visible");
+					caffeine(d.className);
+
+				})
+				.on("mousemove", function() {
+					return bubbleTooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+				})
+				.on("mouseout", function(){return bubbleTooltip.style("visibility", "hidden");});
+
+		vis.enter().append('circle')
+				.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+				.attr('r', function(d) { return 0; })
+				.transition()
+				.duration(duration * 1.2)
+				.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+				.attr('r', function(d) { return d.r; })
+				.attr('class', function(d) { return d.className; })
+				.attr("opacity", 0.8)
+				.attr("fill", function(d) {
+					return continentColor(country_contient[d.className]);
+				});
+
+		d3.select('circle')
+				.on("click", function(d) {
+					bubbleTooltip.text(d.className + " : " + d3.round(d.size) + " mg ");
+					bubbleTooltip.style("visibility", "visible");
+					caffeine(d.className);
+
+				})
+				.on("mousemove", function() {
+					return bubbleTooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+				})
+				.on("mouseout", function(){return bubbleTooltip.style("visibility", "hidden");});
+
+		//display text for bubbles
+		code = svg.selectAll("text").data(nodes)
+				.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+				.text(function(d) {return country_code[d.className]})
+				.attr("text-anchor", "middle")
+				.attr("alignment-baseline", "middle")
+				.style("cursor", "pointer")
+				.on("click", function(d) {
+					bubbleTooltip.text(d.className + " : " + d3.round(d.size) + " mg ");
+					bubbleTooltip.style("visibility", "visible");
+					caffeine(d.className);
+
+				})
+				.on("mousemove", function() {
+					return bubbleTooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+				})
+				.on("mouseout", function(){return bubbleTooltip.style("visibility", "hidden");});;
+
+		code.enter().append("text")
+				.attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; })
+				.text(function(d) {return country_code[d.className]})
+				.attr("text-anchor", "middle")
+				.attr("alignment-baseline", "middle")
+				.style("cursor", "pointer")
+				.on("click", function(d) {
+					bubbleTooltip.text(d.className + " : " + d3.round(d.size) + " mg ");
+					bubbleTooltip.style("visibility", "visible");
+					caffeine(d.className);
+
+				});
+
+		code.exit().remove();
+
+		vis.exit()
+				.transition()
+				.duration(duration)
+				.attr('transform', function(d) {
+					var dy = d.y - diameter/2;
+					var dx = d.x - diameter/2;
+					var theta = Math.atan2(dy,dx);
+					var destX = diameter * (1 + Math.cos(theta) )/ 2;
+					var destY = diameter * (1 + Math.sin(theta) )/ 2;
+					return 'translate(' + destX + ',' + destY + ')'; })
+				.attr('r', function(d) { return 0; })
+				.remove();
+
+	}
+
+</script>
+</body>
+</html>
